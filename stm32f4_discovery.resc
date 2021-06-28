@@ -4,7 +4,7 @@
 using sysbus
 $name?="STM32F4_Discovery"
 mach create $name
-machine LoadPlatformDescription @platforms/boards/stm32f4_discovery-kit.repl
+machine LoadPlatformDescription @./stm32f4.repl
 
 cpu PerformanceInMips 125
 

@@ -5,18 +5,22 @@ emulation CreateCANHub "can"
 
 $name="user_board"
 i @./stm32f4_discovery.resc
-connector Connect sysbus.can0 can
+connector Connect sysbus.can2 can
+sysbus LogPeripheralAccess can2
 emulation CreateServerSocketTerminal 1234 "externalUART"
 connector Connect uart2 externalUART
 logLevel 3
 showAnalyzer sysbus.uart2
 machine StartGdbServer 3333 True
+cpu LogFunctionNames true "can_stm32_"
 
 mach clear
 
 $name="target_board"
 i @./stm32f4_discovery.resc
-connector Connect sysbus.can0 can
+connector Connect sysbus.can2 can
+sysbus LogPeripheralAccess can2
 showAnalyzer sysbus.uart2
+cpu LogFunctionNames true "can_stm32_"
 
 mach clear
