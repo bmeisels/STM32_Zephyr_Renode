@@ -1,11 +1,11 @@
 :name: Multi Node STM32F4 Discovery
 :description: Two CAN-capable STM32F4  nodes (Zephyr)
 
-emulation CreateCANHub "can"
+emulation CreateCANHub "canhub"
 
 $name="user_board"
 i @./stm32f4_discovery.resc
-connector Connect sysbus.can2 can
+connector Connect sysbus.can2 canhub
 sysbus LogPeripheralAccess can2
 emulation CreateServerSocketTerminal 1234 "externalUART"
 connector Connect uart2 externalUART
@@ -18,7 +18,7 @@ mach clear
 
 $name="target_board"
 i @./stm32f4_discovery.resc
-connector Connect sysbus.can2 can
+connector Connect sysbus.can2 canhub
 sysbus LogPeripheralAccess can2
 showAnalyzer sysbus.uart2
 cpu LogFunctionNames true "can_stm32_"

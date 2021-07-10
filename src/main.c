@@ -20,7 +20,6 @@ static k_tid_t tx_tid;
 static K_THREAD_STACK_DEFINE(tx_stack, STACKSIZE);
 static struct k_thread tx_data;
 
-
 /* For testing purposes, we create another RX receiver if configured so */
 #if CONFIG_NET_SOCKETS_CAN_RECEIVERS == 2
 static k_tid_t rx_tid;
