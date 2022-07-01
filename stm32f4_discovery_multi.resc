@@ -3,24 +3,30 @@
 
 emulation CreateCANHub "canhub"
 
-$name="user_board"
-i @./stm32f4_discovery.resc
+mach create "user_board"
+machine LoadPlatformDescription @platforms/boards/stm32f4_discovery-kit.repl
 connector Connect sysbus.can2 canhub
-sysbus LogPeripheralAccess can2
 emulation CreateServerSocketTerminal 1234 "externalUART"
-connector Connect uart2 externalUART
+connector Connect sysbus.usart2 externalUART
 logLevel 3
-showAnalyzer sysbus.uart2
+showAnalyzer sysbus.usart2
 machine StartGdbServer 3333 True
-cpu LogFunctionNames true "can_stm32_"
 
 mach clear
 
-$name="target_board"
-i @./stm32f4_discovery.resc
+mach create "target_board"
+machine LoadPlatformDescription @platforms/boards/stm32f4_discovery-kit.repl
 connector Connect sysbus.can2 canhub
-sysbus LogPeripheralAccess can2
-showAnalyzer sysbus.uart2
-cpu LogFunctionNames true "can_stm32_"
+showAnalyzer sysbus.usart2
 
 mach clear
+
+macro reset
+"""
+    mach set "user_board"
+    sysbus LoadELF $bin
+
+    mach set "target_board"
+    sysbus LoadELF $bin 
+"""
+runMacro $reset
