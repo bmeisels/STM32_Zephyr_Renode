@@ -253,12 +253,9 @@ cleanup:
 	return ret;
 }
 
-void main(void)
+void target_board_main(void)
 {
 	int fd;
-
-	/* Let the device start before doing anything */
-	k_sleep(K_SECONDS(2));
 
 	fd = setup_socket();
 	if (fd < 0) {
@@ -267,4 +264,26 @@ void main(void)
 	}
 
 	rx(INT_TO_POINTER(fd), NULL, NULL);
+}
+
+void user_board_main(void)
+{
+
+}
+
+void main(void)
+{
+	/* Let the device start before doing anything */
+	k_sleep(K_SECONDS(2));
+
+#ifdef TARGET
+	LOG_INF("Target Board");
+	target_board_main();
+#endif
+
+#ifdef USER
+	LOG_INF("User Board");
+	user_board_main();
+#endif
+
 }

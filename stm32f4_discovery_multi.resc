@@ -24,9 +24,9 @@ mach clear
 macro reset
 """
     mach set "user_board"
-    sysbus LoadELF $bin
+    sysbus LoadELF $user_bin
 
     mach set "target_board"
-    sysbus LoadELF $bin 
+    sysbus LoadELF $target_bin 
 """
 runMacro $reset
